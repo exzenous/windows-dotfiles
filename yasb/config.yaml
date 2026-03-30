@@ -12,7 +12,7 @@ bars:
     class_name: "yasb-bar"
     alignment:
       position: "top"
-      center: false
+      center: true
     blur_effect:
       enabled: true 
       acrylic: false
@@ -20,20 +20,21 @@ bars:
       round_corners: true
       border_color: None
     window_flags:
-      always_on_top: false
+      hide_on_fullscreen: true
+      always_on_top: true
       windows_app_bar: true
     dimensions:
       width: "85%"
       height: 30
     padding:
       top: 4
-      left: 4
+      left: 2
       bottom: 4
-      right: 4
+      right: 2
     widgets:
       left: ["active_window"]
       center: []
-      right: ["weather", "microphone", "wifi", "volume", "battery", "clock"]
+      right: ["media", "microphone", "wifi", "volume", "clock"]
 widgets:
   active_window:
     type: "yasb.active_window.ActiveWindowWidget"
@@ -45,7 +46,7 @@ widgets:
       label_icon_size: 20
       max_length: 56
       max_length_ellipsis: "..."
-      monitor_exclusive: false
+      monitor_exclusive: true
   clock:
     type: "yasb.clock.ClockWidget"
     options:
@@ -192,11 +193,18 @@ widgets:
   wifi:
     type: "yasb.wifi.WifiWidget"
     options:
-      label: "<span>{wifi_icon}</span>"
-      label_alt: "{wifi_name} {wifi_strength}%"
+      wifi_icons: [
+        "\udb82\udcbf",  
+        "\udb82\udcbc",
+        "\udb82\udcbd",
+        "\udb82\udcbd",
+        "\udb82\udcbe"
+      ]
+      label: "{wifi_name}  {wifi_icon}"
+      label_alt: "{wifi_strength}%  {wifi_icon}"
       update_interval: 5000
       callbacks:
-        on_left: "toggle_menu"
+        on_left: ""
         on_middle: "exec cmd.exe /c start ms-settings:network"
         on_right: "toggle_label"
   power_menu:
@@ -230,22 +238,22 @@ widgets:
   media:
     type: "yasb.media.MediaWidget"
     options:
-      label: "{title} - {artist}"
-      label_alt: "{title}"
+      label: "{title}"
+      label_alt: "{artist}"
       hide_empty: true
       callbacks:
-        on_left: "toggle_label"
+        on_left: "do_nothing"
         on_middle: "do_nothing"
         on_right: "do_nothing"
       max_field_size:
-        label: 20
+        label: 30
         label_alt: 30
       show_thumbnail: true
       controls_only: false
       controls_left: false
-      controls_hide: false
+      controls_hide: true
       thumbnail_alpha: 80
-      thumbnail_padding: 8
+      thumbnail_padding: 16
       thumbnail_corner_radius: 16
       icons:
         prev_track: "\udb81\udcae"
@@ -316,12 +324,12 @@ widgets:
   microphone:
       type: "yasb.microphone.MicrophoneWidget"
       options:
-        label: "<span>{icon}</span>"
-        label_alt: "<span>{icon}</span>"
+        label: "{icon}"
+        label_alt: "{icon}"
         mute_text: "Mute"
         icons:
-          normal: "\ue720"
-          muted: "\uf12e"
+          normal: "\udb80\udf6c"
+          muted: "\udb80\udf6d"
         mic_menu:
           blur: true
           round_corners: true
@@ -333,8 +341,3 @@ widgets:
           on_left: "toggle_mic_menu"
           on_middle: "exec cmd.exe /c start ms-settings:sound"
           on_right: "toggle_mute"
-        label_shadow:
-          enabled: true
-          color: "black"
-          radius: 3
-          offset: [ 1, 1 ]
